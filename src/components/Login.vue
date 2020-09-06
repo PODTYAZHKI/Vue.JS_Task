@@ -67,22 +67,22 @@ export default{
 	},
 
 	watch:{
-		login(value){
-			this.login = value;
-			this.validateLogin(value);
+		login(){
+			// this.login = value;
+			this.validateLogin();
 		},
-		phone(value){
-			this.phone = value;
-			this.validatePhone(value);
+		phone(){
+			// this.phone = value;
+			this.validatePhone();
 		},
-		password(value){
-			this.password = value;
-			this.validatePassword(value);
+		password(){
+			// this.password = value;
+			this.validatePassword();
 		}
 	},
 	methods: {
 
-		validateLogin(value){
+		validateLogin(){
 			if (this.isPressed){
 				if (loginCheck.test(this.login)) this.error['login'] = ''
 				else if (!this.login) this.error['login'] = 'Обязательное поле'
@@ -90,55 +90,31 @@ export default{
 				else this.error['login'] = 'Неверный формат логина (только английские буквы, числа и нижнее подчёркивание)';
 			}
 		},
-		validatePhone(value){
+		validatePhone(){
 			if (this.isPressed){
 				if (phoneCheck.test(this.phone)) this.error['phone'] = ''
 				else if (!this.phone) this.error['phone'] = 'Обязательное поле'
 				else this.error['phone'] = 'Неверный формат телефона (11 цифр)';
 			}
 		},
-		validatePassword(value){
+		validatePassword(){
 			if (this.isPressed){
 				if (this.password.length >= 6) this.error['password'] = ''
 				else if (!this.password) this.error['password'] = 'Обязательное поле'
 				else this.error['password'] = 'Неверный формат пароля (пароль должен быть минимум 6 символов)';
 			}
 		},
-		// validatePassword(value){
-		// 	if (this.isPressed){
-		// 		if (this.password.value === null || this.password.value === '') this.error['password'] = 'Неверный пароль'
-		// 		else this.error['password'] = '';
-		// 	}
-		// },
-
 
 		ActionPost: function(e) {
 			this.isPressed = true;
 			if(!this.isLoginValid || !this.isPhoneValid || !this.isPasswordValid) {
 				e.preventDefault();
-				if (!this.login) this.error['login'] = 'Обязательное поле'
-				else if (this.login.length < 5) this.error['login'] = 'Логин должен состоять минимум из 5 символов'
-				else if (!this.isLoginValid) this.error['login'] = 'Неверный формат логина (только английские буквы, числа и нижнее подчёркивание)';
-
-				if (!this.phone) this.error['phone'] = 'Обязательное поле'
-				else if (!this.isPhoneValid) this.error['phone'] = 'Неверный формат телефона (11 цифр)';
-
-
-				if (!this.password) this.error['password'] = 'Обязательное поле'
-				else if (!this.isPasswordValid) this.error['password'] = 'Неверный формат пароля (пароль должен быть минимум 6 символов)';
+				if (!this.isLoginValid) this.validateLogin();
+				if (!this.isPhoneValid) this.validatePhone();
+				if (!this.isPasswordValid) this.validatePassword();
 				this.$forceUpdate();
-
-
-				// if (!this.login){this.error['login'] = 'Обязательное поле'}
-				// if (!this.phone){this.error['phone'] = 'Обязательное поле'}
-				// if (!this.password){this.error['password'] = 'Обязательное поле'; this.$forceUpdate()}
-				// console.log(this.error);
-				}
-				
+			}
 			else alert("Форма отправлена!");
-			
-
-
 		}
 	}
 }
